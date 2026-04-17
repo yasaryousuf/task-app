@@ -20,7 +20,7 @@ return new class extends Migration
             $table->dateTime('due_date');
             $table->enum('priority', Priority::cases());
             $table->enum('status', Status::cases());
-            $table->foreignId('created_by')->constrained('users');
+            $table->string('corrective_action')->nullable();
             $table->foreignId('assigned_to')->constrained('users');
             $table->timestamps();
         });

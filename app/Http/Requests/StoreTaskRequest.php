@@ -15,7 +15,7 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,8 +26,11 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', new Enum(Status::class)],
+            'title' => ['required', 'max:200'],
+            'description' => ['required', 'max:500'],
+            'due_date' => ['required', 'date', 'date_format:Y-m-d'],
             'priority' => ['required', new Enum(Priority::class)],
+            'assigned_to' => ['required', 'exists:users,id'],
         ];
     }
 }

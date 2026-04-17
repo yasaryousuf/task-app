@@ -17,6 +17,7 @@
         "vite": "^8.0.8"
     },
     "dependencies": {
-        "@rollup/rollup-win32-x64-msvc": "^4.60.1"
+        "@rollup/rollup-win32-x64-msvc": "^4.60.1",
+        "jquery": "^4.0.0"
     }
 }
