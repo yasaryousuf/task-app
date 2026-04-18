@@ -1,7 +1,7 @@
 @extends('components.layout')
 @section('content')
 @if (session('success') || session('error'))
-<div class="alert alert-{{ session('error') ? 'danger' : 'success' ]}">
+<div class="alert alert-{{ session('error') ? 'danger' : 'success' }}">
     <ul>
         <li>{{ session('error') ? session('error') : session('success')  }}</li>
     </ul>

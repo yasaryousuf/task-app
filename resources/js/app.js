@@ -59,7 +59,7 @@ $(".change_status").click(function (e) {
     let task_id = formEl.find('[name="task_id"]').val();
     let status = $(this).data("status");
     let corrective_action = $("[name='corrective_action']").val();
-    if (status == "non_compliant" && corrective_action == null) {
+    if (status == "non_compliant" && corrective_action == "") {
         return alert("Correction note required.");
     }
 

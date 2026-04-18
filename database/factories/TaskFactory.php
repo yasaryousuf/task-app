@@ -23,7 +23,7 @@ class TaskFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'due_date' => fake()->dateTimeBetween('-1 week', '+1 week'),
+            'due_date' => fake()->dateTimeBetween('-1 week', '+1 week')->format('Y-m-d'),
             'priority' => fake()->randomElement(array_column(Priority::cases(), 'value')),
             'status' => fake()->randomElement(array_column(Status::cases(), 'value')),
             'assigned_to' => fake()->randomElement(User::pluck('id'))
