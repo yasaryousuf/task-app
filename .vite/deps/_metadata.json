@@ -2,7 +2,31 @@
   "hash": "b67c2050",
   "configHash": "65bc0bd3",
   "lockfileHash": "1677760a",
-  "browserHash": "a8906c40",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "1a6b8220",
+  "optimized": {
+    "@popperjs/core": {
+      "src": "../../node_modules/@popperjs/core/lib/index.js",
+      "file": "@popperjs_core.js",
+      "fileHash": "0c6a264c",
+      "needsInterop": false
+    },
+    "bootstrap": {
+      "src": "../../node_modules/bootstrap/dist/js/bootstrap.esm.js",
+      "file": "bootstrap.js",
+      "fileHash": "78af9b0e",
+      "needsInterop": false
+    },
+    "jquery": {
+      "src": "../../node_modules/jquery/dist-module/jquery.module.js",
+      "file": "jquery.js",
+      "fileHash": "9b16bb49",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "lib-C4j-95Md": {
+      "file": "lib-C4j-95Md.js",
+      "isDynamicEntry": false
+    }
+  }
 }

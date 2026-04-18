@@ -23,13 +23,15 @@ $(".edit-task-btn").click(function () {
 
             if (res.success) {
                 if (res.task) {
+                    console.log(res.task.due_date.split(" ")[0]);
+
                     editModalEl.find('[name="title"]').val(res.task.title);
                     editModalEl
                         .find('[name="description"]')
                         .val(res.task.description);
                     editModalEl
                         .find('[name="due_date"]')
-                        .val(res.task.due_date);
+                        .val(res.task.due_date.split(" ")[0]);
                     editModalEl.find('[name="id"]').val(res.task.id);
                     editModalEl
                         .find('[name="priority"]')

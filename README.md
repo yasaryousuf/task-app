@@ -13,4 +13,4 @@
 -   Run `npm i`
 -   Run `npm run dev`
 
-##### You can now access your project at localhost:8000 :)
+##### You can now access your project at localhost:8000

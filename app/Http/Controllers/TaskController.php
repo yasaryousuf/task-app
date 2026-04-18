@@ -61,7 +61,7 @@ class TaskController extends Controller
             $task->save();
             $this->activityLog->log("Task ID: {$request->task_id} status changed to {$request->status}");
         } catch (\Throwable $th) {
-            return response()->json(['success' => false], 200);
+            return response()->json(['success' => false], 500);
         }
         return response()->json(['success' => true, 'task' => $task], 200);
     }
@@ -91,13 +91,17 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request)
     {
-        $task = Task::find($request->id);
-        $data = [
-            ...$request->validated(),
-            'status' => $task->status
-        ];
-        $task->update($data);
-        $this->activityLog->log("Task ID: {$request->id} updated");
+        try {
+            $task = Task::find($request->id);
+            $data = [
+                ...$request->validated(),
+                'status' => $task->status
+            ];
+            $task->update($data);
+            $this->activityLog->log("Task ID: {$request->id} updated");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Something went wrong.');
+        }
         return redirect()->back()->with('success', 'Task updated successfully.');
     }
 }
