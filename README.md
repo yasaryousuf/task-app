@@ -49,6 +49,7 @@ A simple Laravel application for task management workflow. A user can:
 -   AJAX with jQuery is used in task status update as minimum UI expectation
 -   Corrective action input field is kept hidden and only shown when task status is changed to non_compliant
 -   Laravel validation used with separate Request class and injected into controllers
+-   Time isn't used for due date as per assessment specification file it isn't needed
 
 ## AI assisted tools
 

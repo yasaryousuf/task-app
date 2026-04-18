@@ -64,7 +64,7 @@
             <td>{{ $task->description }}</td>
             <td>{{ $task->priority->label() }}</td>
             <td class="status">{{ $task->status->label() }}</td>
-            <td>{{ $task->due_date }}</td>
+            <td>{{ date("Y-m-d", strtotime($task->due_date)) }}</td>
             <td>{{ $task->assigned_to_user->name }}</td>
             <td>
                 <button type="button" class="edit-task-btn btn btn-primary btn-sm m-1" data-id="{{$task->id}}" data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit</button>
