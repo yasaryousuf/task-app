@@ -18,5 +18,21 @@ test('task api response', function () {
     $response = $this->get('/api/task');
     $response->assertHeader('Content-Type', 'application/json')
         ->assertStatus(200)
-        ->assertJsonCount(3, 'data');
+        ->assertJsonCount(3, 'data')
+        ->assertJsonStructure([
+            'data' => ['*' => [
+                'id',
+                'title',
+                'description',
+                'priority',
+                'status',
+                'is_overdue',
+                'assigned_to_user' => [
+                    'id',
+                    'name',
+                    'email'
+                ],
+                'corrective_action'
+            ]]
+        ]);
 });
