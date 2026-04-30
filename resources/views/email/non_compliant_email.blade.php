@@ -1,0 +1,1 @@
+<p>Task: {{$task->title}} is now non compliant</p>

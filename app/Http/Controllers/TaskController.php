@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Task\Status;
+use App\Events\TaskNonCompliant;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\TaskStatusChangeRequest;
@@ -11,6 +12,7 @@ use App\Models\ActivityLog;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -53,14 +55,18 @@ class TaskController extends Controller
     public function statusChange(TaskStatusChangeRequest $request)
     {
         try {
+            DB::beginTransaction();
             $task = Task::find($request->task_id);
             $task->status = $request->status;
-            if ($request->corrective_action) {
+            if ($request->corrective_action)
                 $task->corrective_action = $request->corrective_action;
-            }
             $task->save();
             $this->activityLog->log("Task ID: {$request->task_id} status changed to {$request->status}");
+            if ($task->status == Status::NON_COMPLIANT)
+                event(new TaskNonCompliant($task));
+            DB::commit();
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json(['success' => false], 500);
         }
         return response()->json(['success' => true, 'task' => $task], 200);
@@ -92,6 +98,7 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request)
     {
         try {
+            DB::beginTransaction();
             $task = Task::find($request->id);
             $data = [
                 ...$request->validated(),
@@ -99,7 +106,9 @@ class TaskController extends Controller
             ];
             $task->update($data);
             $this->activityLog->log("Task ID: {$request->id} updated");
+            DB::commit();
         } catch (\Throwable $th) {
+            DB::rollBack();
             return redirect()->back()->with('error', 'Something went wrong.');
         }
         return redirect()->back()->with('success', 'Task updated successfully.');
