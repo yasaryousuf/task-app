@@ -6,7 +6,10 @@ window.Popper = Popper;
 import "bootstrap";
 
 $(".mark_as_non_compliant").click(function () {
-    $(".corrective_action_section").toggleClass("d-none");
+    $(this)
+        .parent("form")
+        .find(".corrective_action_section")
+        .toggleClass("d-none");
 });
 
 $(".edit-task-btn").click(function () {
@@ -50,7 +53,6 @@ $(".change_status").click(function (e) {
     e.preventDefault();
     let taskRowEl = $(this).parents("tr");
 
-    taskRowEl.find(".change_status").attr("disabled", "disabled");
     let formEl = $(this).parents("form");
 
     let method = formEl.attr("method");
@@ -58,10 +60,11 @@ $(".change_status").click(function (e) {
     let token = formEl.find('[name="_token"]').val();
     let task_id = formEl.find('[name="task_id"]').val();
     let status = $(this).data("status");
-    let corrective_action = $("[name='corrective_action']").val();
+    let corrective_action = formEl.find("[name='corrective_action']").val();
     if (status == "non_compliant" && corrective_action == "") {
         return alert("Correction note required.");
     }
+    taskRowEl.find(".change_status").attr("disabled", "disabled");
 
     $.ajax({
         type: method,

@@ -18,7 +18,7 @@
     <div class="col-auto">
         <label class="visually-hidden" for="status">Status</label>
         <select class="form-select" id="status" name="status">
-            <option value="">Select task status ...</option>
+            <option value="">Any task status</option>
             @foreach($task_statuses as $task_status)
             <option value="{{$task_status->value}}" {{ request()->get('status') == $task_status->value ? 'selected' : '' }}>{{$task_status->label()}}</option>
             @endforeach
@@ -27,15 +27,16 @@
     <div class="col-auto">
         <label class="visually-hidden" for="assigned_to">Assigned to</label>
         <select class="form-select" id="assigned_to" name="assigned_to">
-            <option value="">Select assigned to user ...</option>
+            <option value="">Any assigned user</option>
             @foreach($assigned_users as $assigned_user)
             <option value="{{$assigned_user->id}}" {{ request()->get('assigned_to') == $assigned_user->id ? 'selected' : '' }}>{{$assigned_user->name}}</option>
             @endforeach
         </select>
     </div>
     <div class="col-auto">
+        <label class="visually-hidden" for="due">Due date</label>
         <select class="form-select" id="due" name="due">
-            <option value="" {{ empty(request()->get('due')) ? 'selected' : '' }}>All</option>
+            <option value="" {{ empty(request()->get('due')) ? 'selected' : '' }}>Overdue and upcoming tasks</option>
             <option value="due_today" {{ request()->get('due') == 'due_today' ? 'selected' : '' }}>Due today</option>
             <option value="overdue" {{ request()->get('due') == 'overdue' ? 'selected' : '' }}>Overdue</option>
         </select>
@@ -63,7 +64,12 @@
             <td>{{ $task->title }}</td>
             <td>{{ $task->description }}</td>
             <td>{{ $task->priority->label() }}</td>
-            <td class="status">{{ $task->status->label() }}</td>
+            <td class="status">
+                <button data-toggle="tooltip" data-placement="top" title="{{ $task->corrective_action }}" type="button" class="btn btn-{{ $task->status->cssClass() }}">
+
+                    {{ $task->status->label() }}
+                </button>
+            </td>
             <td>{{ date("Y-m-d", strtotime($task->due_date)) }}</td>
             <td>{{ $task->assigned_to_user->name }}</td>
             <td>
@@ -85,7 +91,7 @@
         @endforeach
         @else
         <tr>
-            <td colspan="4">
+            <td colspan="7">
                 No tasks available.
             </td>
         </tr>
